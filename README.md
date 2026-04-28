@@ -1,5 +1,7 @@
 # f3dx-router
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/smigolsmigol/f3dx-router/badge)](https://scorecard.dev/viewer/?uri=github.com/smigolsmigol/f3dx-router)
+
 LiteLLM is the incumbent Python router. It works but it's slow (~500us mean overhead per call by their own troubleshooting docs), and the Hono / Cloudflare gateways like Helicone went into maintenance mode in March 2026 after the Mintlify acquisition. The in-process Rust hot path is the gap.
 
 `f3dx-router` is what you import inside an agent loop when the network hop to a hosted gateway is too expensive. It composes with hosted billing/dashboard products like [llmkit](https://llmkit.sh) instead of competing with them: same SDK, two backends. Local f3dx-router for the sub-millisecond hot path; llmkit for the cost dashboard. Or both.
