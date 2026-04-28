@@ -1,0 +1,17 @@
+target/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.so
+*.pyd
+*.dylib
+*.dll
+*.pdb
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+Cargo.lock

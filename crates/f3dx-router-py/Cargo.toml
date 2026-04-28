@@ -1,0 +1,22 @@
+[package]
+name = "f3dx-router-py"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Python bridge for f3dx-router (PyO3 abi3)."
+
+[lib]
+name = "_native"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+f3dx-router-core = { package = "f3dx-router", path = "../f3dx-router" }
+
+[lints]
+workspace = true
