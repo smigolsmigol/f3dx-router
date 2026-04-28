@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,6 +22,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  semgrep:
+    name: semgrep (security-audit + secrets)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:1.156.0
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: semgrep scan --config p/security-audit --config p/secrets --error --metrics=off
+
   cargo-audit:
     name: cargo audit
     runs-on: ubuntu-latest
@@ -28,7 +38,5 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2 # TODO: SHA-pin
-      - name: install cargo-audit
-        run: cargo install cargo-audit --locked
-      - name: run cargo audit
-        run: cargo audit
+      - run: cargo install cargo-audit --locked
+      - run: cargo audit
