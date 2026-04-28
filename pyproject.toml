@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "f3dx-router"
-version = "0.0.1"
+version = "0.0.2"
 description = "In-process Rust router for LLM providers. Hedged-parallel + 429/5xx hot-swap < 1ms. Composes with hosted gateways like llmkit."
 readme = "README.md"
 requires-python = ">=3.10"
