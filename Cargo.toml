@@ -10,7 +10,10 @@ license = "MIT"
 repository = "https://github.com/smigolsmigol/f3dx-router"
 
 [workspace.dependencies]
-pyo3 = { version = "0.24", features = ["abi3-py310"] }
+# Phase 0.5 consolidation prereq (2026-04-30): bumped from 0.24 to =0.28.3
+# (exact pin), aligning with f3dx workspace post-Phase-A. Required before
+# Phase B subtree-merge into f3dx so the workspace pyo3 is single-version.
+pyo3 = { version = "=0.28.3", features = ["abi3-py310"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }

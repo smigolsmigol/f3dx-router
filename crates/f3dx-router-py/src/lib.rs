@@ -45,7 +45,7 @@ fn parse_policy(s: &str) -> PyResult<RoutingPolicy> {
 fn parse_providers(providers: &Bound<'_, PyList>) -> PyResult<Vec<Provider>> {
     let mut out = Vec::with_capacity(providers.len());
     for item in providers.iter() {
-        let d: &Bound<'_, PyDict> = item.downcast()?;
+        let d: &Bound<'_, PyDict> = item.cast()?;
         let name: String = d
             .get_item("name")?
             .ok_or_else(|| PyValueError::new_err("provider missing 'name'"))?
@@ -151,7 +151,7 @@ impl PyRouter {
         let inner = &self.inner;
         let runtime = Arc::clone(&self.runtime);
         let response = py
-            .allow_threads(|| runtime.block_on(async move { inner.chat_completions(body).await }));
+            .detach(|| runtime.block_on(async move { inner.chat_completions(body).await }));
         match response {
             Ok(value) => json_value_to_py(py, &value),
             Err(e) => Err(PyRuntimeError::new_err(e.to_string())),

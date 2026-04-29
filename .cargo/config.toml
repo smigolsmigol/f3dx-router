@@ -1,0 +1,14 @@
+# Workspace cargo config.
+#
+# RUST_MIN_STACK is required because windows-sys >= 0.61.0 has a known
+# rustc stack-overflow issue during codegen on Windows MSVC + edition 2024
+# heavy parallel builds (the crate's macro expansion goes deep enough to
+# blow the default 8MB rustc thread stack). 32MB suffices for the current
+# transitive dep tree.
+#
+# pyo3 0.28 (Phase 0.5 of the consolidation plan, 2026-04-30) pulls
+# windows-sys 0.61.2 transitively via its abi3 build path. Without this
+# env var, fresh builds fail with STATUS_ACCESS_VIOLATION (exit 0xc0000005).
+
+[env]
+RUST_MIN_STACK = "33554432"
