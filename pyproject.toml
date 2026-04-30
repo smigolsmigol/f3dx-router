@@ -21,10 +21,15 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 # Final transition release. Re-exports from the new location at f3dx.router;
-# emits DeprecationWarning on import. Will be yanked from PyPI 4-6 months
-# after this release lands. New users: `pip install f3dx[router]`.
+# emits DeprecationWarning on import. EOL: 2026-08-30 (4 months after
+# 2026-04-30 phase-C ship). New users: `pip install f3dx[router]`.
+#
+# Pin tightened to `>=0.0.19,<0.1` so a future f3dx 0.1 breaking change
+# does not silently break shim users via resolver upgrade. If f3dx 0.1
+# ships, this shim ships a 0.0.5 with the matching pin; older shim
+# installs stay locked to the 0.0.x line.
 dependencies = [
-    "f3dx>=0.0.18",
+    "f3dx>=0.0.19,<0.1",
 ]
 
 [tool.hatch.build.targets.wheel]
