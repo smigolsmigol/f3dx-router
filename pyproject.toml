@@ -1,11 +1,11 @@
 [build-system]
-requires = ["maturin>=1.13,<2.0"]
-build-backend = "maturin"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "f3dx-router"
-version = "0.0.3"
-description = "In-process Rust router for LLM providers. Hedged-parallel + 429/5xx hot-swap < 1ms. Composes with hosted gateways like llmkit."
+version = "0.0.4"
+description = "DEPRECATED. Consolidated into f3dx[router]. Install `f3dx` and import from `f3dx.router`."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
@@ -14,25 +14,26 @@ authors = [
     { name = "Federico Benini", email = "smigolsmigol@protonmail.com" },
 ]
 classifiers = [
+    "Development Status :: 7 - Inactive",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "License :: OSI Approved :: MIT License",
 ]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0",
-    "ruff>=0.7",
-    "mypy>=1.10",
+# Final transition release. Re-exports from the new location at f3dx.router;
+# emits DeprecationWarning on import. Will be yanked from PyPI 4-6 months
+# after this release lands. New users: `pip install f3dx[router]`.
+dependencies = [
+    "f3dx>=0.0.18",
 ]
 
-[tool.maturin]
-manifest-path = "crates/f3dx-router-py/Cargo.toml"
-module-name = "f3dx_router._native"
-features = ["pyo3/extension-module"]
-python-source = "python"
+[tool.hatch.build.targets.wheel]
+packages = ["python/f3dx_router"]
 
-[tool.ruff]
-line-length = 100
-target-version = "py310"
+[tool.hatch.build.targets.sdist]
+include = [
+    "python/f3dx_router",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
